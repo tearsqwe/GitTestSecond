@@ -1,5 +1,6 @@
 package com.example.gittest2
 
+import android.content.Context
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -15,7 +16,7 @@ class CreateActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_create)
         val dbManager=DBManager(this)
-        dbManager.openDB()
+        //val dbHelper=DBHelper(this)
 
         val editText1: EditText = findViewById(R.id.editTextField1)
         val editText2: EditText = findViewById(R.id.editTextField2)
@@ -23,6 +24,8 @@ class CreateActivity : AppCompatActivity() {
         val btnAdd: Button = findViewById(R.id.buttonAdd)
 
         btnAdd.setOnClickListener {
+
+            dbManager.openDB()
 
             val column1=editText1.text.toString()
             val column2=editText2.text.toString()

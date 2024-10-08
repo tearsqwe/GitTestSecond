@@ -2,20 +2,21 @@ package com.example.gittest2
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
 class DBManager(val context: Context) {
 
     val DBHelper=DBHelper(context)
+    var db:SQLiteDatabase?= null
 
 
     fun openDB()
     {
-        val db=DBHelper.writableDatabase
+        db=DBHelper.writableDatabase
     }
     fun insert( column1: String, column2:String, column3:String)
     {
-        val db= DBHelper.writableDatabase
 
         val values= ContentValues().apply {
             put (DBObject.COLUMN_NAME_NAME, column1)
@@ -28,6 +29,18 @@ class DBManager(val context: Context) {
     {
         DBHelper.close()
     }
+    fun readData(): ArrayList<String>{
+        val dataList=ArrayList<String>()
+        val cursor= db?.query(DBObject.TABLE_NAME,null,null,null,
+            null,null,null)
+        while(cursor?.moveToNext()!!) {
+            val dataText=cursor?.getString(cursor.getColumnIndexOrThrow(DBObject.COLUMN_NAME_NAME))
+            dataList.add(dataText.toString())
+            }
+            cursor.close()
+        return dataList
+    }
+
 
 
 }
