@@ -2,7 +2,9 @@ package com.example.gittest2
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.ListView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -21,21 +23,18 @@ class MainActivity : AppCompatActivity() {
         val btnRead: Button = findViewById(R.id.button2)
         val btnUpdate: Button = findViewById(R.id.button3)
         val btnDelete: Button = findViewById(R.id.button4)
-        val tvDB: TextView=findViewById(R.id.textView2)
+        val listView: ListView =findViewById(R.id.listViewForData)
 
         btnCreate.setOnClickListener {
             val intent= Intent(this,CreateActivity::class.java )
             startActivity(intent)
         }
         btnRead.setOnClickListener {
-            tvDB.text= ""
+            //listView.text= ""
             dbManager.openDB()
-            val dataList= dbManager.readData()
-            for (i in dataList)
-                tvDB.append(i+ "\n")
-
-
-            //dbManager.readData()
+            val dataList= dbManager.readData()// в список добавляем записи из бд
+            val adapter= ArrayAdapter(this,android.R.layout.simple_list_item_1, dataList)
+            listView.adapter= adapter
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->

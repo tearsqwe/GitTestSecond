@@ -34,8 +34,14 @@ class DBManager(val context: Context) {
         val cursor= db?.query(DBObject.TABLE_NAME,null,null,null,
             null,null,null)
         while(cursor?.moveToNext()!!) {
-            val dataText=cursor?.getString(cursor.getColumnIndexOrThrow(DBObject.COLUMN_NAME_NAME))
-            dataList.add(dataText.toString())
+            //val dataText=cursor?.getString(cursor.getColumnIndexOrThrow(DBObject.COLUMN_NAME_NAME))
+            val name = cursor.getString(cursor.getColumnIndexOrThrow(DBObject.COLUMN_NAME_NAME))
+            val surname =cursor.getString(cursor.getColumnIndexOrThrow(DBObject.COLUMN_NAME_SURNAME))
+            val age =cursor.getString(cursor.getColumnIndexOrThrow(DBObject.COLUMN_NAME_AGE))
+
+            val dataText="$name, $surname, $age"
+
+            dataList.add(dataText)
             }
             cursor.close()
         return dataList
