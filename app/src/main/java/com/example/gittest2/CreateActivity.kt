@@ -15,7 +15,7 @@ class CreateActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_create)
-        val dbManager=DBManager(this)
+        val dbManager = DBManager(this)
         //val dbHelper=DBHelper(this)
 
         val editText1: EditText = findViewById(R.id.editTextField1)
@@ -27,12 +27,12 @@ class CreateActivity : AppCompatActivity() {
 
             dbManager.openDB()
 
-            val column1=editText1.text.toString()
-            val column2=editText2.text.toString()
-            val column3=editText3.text.toString()
+            val column1 = editText1.text.toString()
+            val column2 = editText2.text.toString()
+            val column3 = editText3.text.toString()
 
-            dbManager.insert(column1,column2,column3)
-            if(column1 ==" "|| column2==" "||column3==" ")
+            dbManager.insert(column1, column2, column3)
+            if (column1 == " " || column2 == " " || column3 == " ")
                 Toast.makeText(this, "Что-то не заполнено", Toast.LENGTH_LONG).show()
             else
                 Toast.makeText(this, "Запись сохранена", Toast.LENGTH_LONG).show()
