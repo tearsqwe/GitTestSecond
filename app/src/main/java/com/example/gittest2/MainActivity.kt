@@ -48,6 +48,10 @@ class MainActivity : AppCompatActivity() {
             listView.adapter = adapter
 
         }
+        btnUpdate.setOnClickListener {
+            val intent=Intent(this, UpdateAcivity::class.java)
+            startActivity(intent)
+        }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

@@ -73,5 +73,57 @@ class DBManager(val context: Context) {
         }
     }
 
+    fun update(userId:String, name:String, surname:String, age: Int){
+        val selection = "${BaseColumns._ID} = ?"
+        val selectionArgs= arrayOf(userId)
+
+
+        val values= ContentValues().apply{
+            put(DBObject.COLUMN_NAME_NAME, name)
+            put(DBObject.COLUMN_NAME_SURNAME,surname)
+            put(DBObject.COLUMN_NAME_AGE, age)
+
+        }
+        val count=db?.update(DBObject.TABLE_NAME, values, selection, selectionArgs)
+
+    }
+
+    fun readData(userId: String): ArrayList<String> {
+        val listOfData = ArrayList<String>()
+        val selection = "${BaseColumns._ID} = ?"
+        val selectionArgs = arrayOf(userId)
+
+        val cursor = db?.query(
+            DBObject.TABLE_NAME, null, selection, selectionArgs,
+            null, null, null
+        )
+
+        // Добавляем вывод для отладки
+        println("Запрос на чтение записи с ID: $userId")
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                println("Данные найдены!")
+
+                // Извлекаем данные из курсора
+                val name = cursor.getString(cursor.getColumnIndexOrThrow(DBObject.COLUMN_NAME_NAME))
+                val surname = cursor.getString(cursor.getColumnIndexOrThrow(DBObject.COLUMN_NAME_SURNAME))
+                val age = cursor.getString(cursor.getColumnIndexOrThrow(DBObject.COLUMN_NAME_AGE))
+
+                // Добавляем данные в список
+                listOfData.add(name)
+                listOfData.add(surname)
+                listOfData.add(age.toString())
+            } else {
+                println("Запись с ID $userId не найдена в базе данных")
+            }
+            cursor.close()
+        } else {
+            println("Ошибка при запросе к базе данных")
+        }
+
+        return listOfData
+    }
+
 
 }
